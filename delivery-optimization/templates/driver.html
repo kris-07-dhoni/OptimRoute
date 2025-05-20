@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Portal - OptimRoute</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/driver.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <h1>OptimRoute</h1>
+            </div>
+            <nav>
+                <a href="/" class="nav-link">Home</a>
+                <button id="logoutBtn" class="nav-link logout-btn hidden">Logout</button>
+            </nav>
+        </header>
+
+        <main>
+            <div id="authSection" class="auth-section">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Login</button>
+                        <button class="auth-tab" data-tab="signup">Signup</button>
+                    </div>
+                    
+                    <div id="loginForm" class="auth-form active">
+                        <h2>Driver Login</h2>
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" required>
+                            <label for="loginEmail">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" required>
+                            <label for="loginPassword">Password</label>
+                        </div>
+                        <button id="loginBtn" class="auth-btn">Login</button>
+                        <p id="loginMessage" class="auth-message"></p>
+                    </div>
+                    
+                    <div id="signupForm" class="auth-form">
+                        <h2>Driver Signup</h2>
+                        <div class="form-group">
+                            <input type="text" id="signupName" required>
+                            <label for="signupName">Full Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="signupEmail" required>
+                            <label for="signupEmail">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="signupPassword" required>
+                            <label for="signupPassword">Password</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="truckNumber" required>
+                            <label for="truckNumber">Truck Number</label>
+                        </div>
+                        <button id="signupBtn" class="auth-btn">Signup</button>
+                        <p id="signupMessage" class="auth-message"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="driverDashboard" class="driver-dashboard hidden">
+                <h2>Welcome, <span id="driverName"></span>!</h2>
+                
+                <div class="quote-container">
+                    <blockquote>
+                        "Even a 1% improvement in delivery routes can lead to massive cost savings."
+                    </blockquote>
+                </div>
+                
+                <div class="dashboard-content">
+                    <div class="location-input-container">
+                        <h3>Enter Delivery Locations</h3>
+                        <p>Enter place names or coordinates to optimize your delivery route.</p>
+                        
+                        <div class="location-inputs">
+                            <div class="location-input-group">
+                                <div class="form-group">
+                                    <input type="text" id="locationInput" placeholder="Enter a place name or coordinates">
+                                    <button id="addLocationBtn" class="action-btn">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </div>
+                                <div class="input-toggle">
+                                    <label>
+                                        <input type="checkbox" id="coordToggle">
+                                        <span class="toggle-label">Enter as coordinates</span>
+                                    </label>
+                                </div>
+                                <div id="coordInputs" class="coord-inputs hidden">
+                                    <div class="form-group">
+                                        <input type="number" id="latInput" step="0.000001" placeholder="Latitude">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" id="lngInput" step="0.000001" placeholder="Longitude">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="locationsList" class="locations-list">
+                                <h4>Added Locations:</h4>
+                                <ul id="locationsContainer"></ul>
+                            </div>
+                            
+                            <button id="optimizeBtn" class="primary-btn" disabled>
+                                <i class="fas fa-route"></i> Optimize Route
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="map-container">
+                        <div id="map"></div>
+                        <div id="routeInfo" class="route-info hidden">
+                            <h4>Optimized Route</h4>
+                            <div id="routeDetails"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 OptimRoute. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p id="loadingText">Processing...</p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='js/driver.js') }}"></script>
+</body>
+</html>
